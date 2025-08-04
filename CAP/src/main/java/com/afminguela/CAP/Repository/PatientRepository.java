@@ -20,11 +20,8 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Query("SELECT p FROM Patient p JOIN p.admitted_by e WHERE e.department LIKE %:department%")
     List<Patient> findByAdmitted_by(@Param("department") String department);
 
-    @Query( "SELECT patient.*
-    FROM patient p
-    JOIN Employee ON patient.admittingDoctorId = Employee.employee_id
-    WHERE Employee.status = 'OFF';")
-    List<Patient> findByStatus();
+    @Query("SELECT p FROM Patient p JOIN p.admitted_by e WHERE e.status = 'OFF'")
+    List<Patient> findByStatusOFF();
 
 
 }
