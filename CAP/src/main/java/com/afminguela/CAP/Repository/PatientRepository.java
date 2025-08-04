@@ -1,0 +1,30 @@
+package com.afminguela.CAP.Repository;
+
+import com.afminguela.CAP.models.Employee;
+import com.afminguela.CAP.models.Patient;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@Repository
+public interface PatientRepository extends JpaRepository<Patient, Long> {
+
+    List<Patient> findByBirthDate(LocalDate birthDate);
+
+    List<Patient> findByAdmitted_by(Employee admitted);
+
+    @Query("SELECT p FROM Patient p JOIN p.admitted_by e WHERE e.department LIKE %:department%")
+    List<Patient> findByAdmitted_by(@Param("department") String department);
+
+    @Query( "SELECT patient.*
+    FROM patient p
+    JOIN Employee ON patient.admittingDoctorId = Employee.employee_id
+    WHERE Employee.status = 'OFF';")
+    List<Patient> findByStatus();
+
+
+}
