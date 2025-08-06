@@ -18,4 +18,7 @@ public class Patient {
     @OneToOne(cascade = CascadeType.ALL)
     private Employee admitted_by;
 
+
+
+
 }

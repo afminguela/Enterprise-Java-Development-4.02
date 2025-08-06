@@ -1,13 +1,61 @@
 package com.afminguela.CAP.controller;
 
+import com.afminguela.CAP.Repository.PatientRepository;
+import com.afminguela.CAP.enums.Department;
+import com.afminguela.CAP.enums.Status;
+import com.afminguela.CAP.models.Employee;
+import com.afminguela.CAP.models.Patient;
 import com.afminguela.CAP.service.EmployeeService;
+import com.afminguela.CAP.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/Employees")
+@RequestMapping("/Patiente")
 public class PatientController {
     @Autowired
-    private EmployeeService employeeService;
+    private PatientService patientService;
+
+    @PostMapping
+    public Patient save(@RequestBody Patient patient) {
+        return patientService.savePatient(patient);
+    }
+
+    @GetMapping
+    public List<Patient> findAll() {
+        return patientService.findAllPatients();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Patient> findById(@PathVariable Long id){
+        Optional<Patient> patient = patientService.findPatientById(id);
+        return patient.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/search/birthDate/{birthDate}")
+    public ResponseEntity<List<Patient>> findByBirthDate(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate birthDate){
+        List<Patient> patients =patientService.findByDateOfBirth(birthDate);
+        return ResponseEntity.ok(patients);
+    }
+
+    @GetMapping("/search/department/{department}")
+    public List<Patient> findByDepartment(@PathVariable String department){
+        return patientService.findAllPatientsByDepartment(department);
+    }
+
+    @GetMapping("/search/status/{status}")
+    public List<Patient> findByStatus(){
+        return patientService.findPatientByStatusOFF();
+    }
+
+
+
+
 }

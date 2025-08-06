@@ -1,19 +1,22 @@
 package com.afminguela.CAP.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.afminguela.CAP.enums.*;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
 @Data
-public class Employee{
+public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long employee_id;
 
     private String name;
-    private Enum department;
-    private Enum status;
+
+    @Enumerated(EnumType.STRING)
+    private Department department;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
 }
