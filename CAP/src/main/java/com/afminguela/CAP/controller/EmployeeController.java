@@ -46,5 +46,47 @@ public class EmployeeController {
         return employeeService.findAllEmployeesByDepartment(department);
     }
 
+    @PatchMapping("/{id}/name")
+    public ResponseEntity<Employee> updateName(@PathVariable Long id, @RequestBody String name) {
+        Optional<Employee> employeeOpt = employeeService.findEmployeeById(id);
+        if (employeeOpt.isPresent()) {
+            Employee employee = employeeOpt.get();
+            employee.setName(name);
+            Employee updated = employeeService.saveEmployee(employee);
+            return ResponseEntity.ok(updated);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Employee> updateStatus(@PathVariable Long id, @RequestBody Status status) {
+        Optional<Employee> employeeOpt = employeeService.findEmployeeById(id);
+        if (employeeOpt.isPresent()) {
+            Employee employee = employeeOpt.get();
+            employee.setStatus(status);
+            Employee updated = employeeService.saveEmployee(employee);
+            return ResponseEntity.ok(updated);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PatchMapping("/{id}/department")
+    public ResponseEntity<Employee> updateDepartment(@PathVariable Long id, @RequestBody Department department) {
+        Optional<Employee> employeeOpt = employeeService.findEmployeeById(id);
+        if (employeeOpt.isPresent()) {
+            Employee employee = employeeOpt.get();
+            employee.setDepartment(department);
+            Employee updated = employeeService.saveEmployee(employee);
+            return ResponseEntity.ok(updated);
+
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+
 
 }
