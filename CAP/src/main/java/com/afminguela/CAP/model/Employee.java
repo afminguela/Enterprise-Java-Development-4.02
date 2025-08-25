@@ -1,11 +1,15 @@
-package com.afminguela.CAP.models;
+package com.afminguela.CAP.model;
 
 import com.afminguela.CAP.enums.*;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,5 +22,6 @@ public class Employee {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
 
 }

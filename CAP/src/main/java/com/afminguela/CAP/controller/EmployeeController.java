@@ -1,9 +1,8 @@
 package com.afminguela.CAP.controller;
 
-import com.afminguela.CAP.Repository.EmployeeRepository;
 import com.afminguela.CAP.enums.Department;
 import com.afminguela.CAP.enums.Status;
-import com.afminguela.CAP.models.Employee;
+import com.afminguela.CAP.model.Employee;
 import com.afminguela.CAP.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package com.afminguela.CAP.Repository;
 
 
-import com.afminguela.CAP.models.Patient;
+import com.afminguela.CAP.model.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

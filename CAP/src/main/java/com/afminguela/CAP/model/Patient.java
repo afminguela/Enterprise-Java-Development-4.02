@@ -1,4 +1,4 @@
-package com.afminguela.CAP.models;
+package com.afminguela.CAP.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

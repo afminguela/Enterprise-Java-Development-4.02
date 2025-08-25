@@ -1,17 +1,13 @@
 package com.afminguela.CAP.controller;
 
-import com.afminguela.CAP.Repository.PatientRepository;
-import com.afminguela.CAP.enums.Department;
-import com.afminguela.CAP.enums.Status;
-import com.afminguela.CAP.models.Employee;
-import com.afminguela.CAP.models.Patient;
-import com.afminguela.CAP.service.EmployeeService;
+
+import com.afminguela.CAP.model.Patient;
+
 import com.afminguela.CAP.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,8 +18,8 @@ import java.util.Optional;
 public class PatientController {
     @Autowired
     private PatientService patientService;
-    @Autowired
-    private ResponseEntityExceptionHandler responseEntityExceptionHandler;
+//    @Autowired
+//    private ResponseEntityExceptionHandler responseEntityExceptionHandler;
 
     @PostMapping
     public Patient save(@RequestBody Patient patient) {

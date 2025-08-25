@@ -2,9 +2,7 @@ package com.afminguela.CAP.service;
 
 
 import com.afminguela.CAP.Repository.PatientRepository;
-import com.afminguela.CAP.enums.Department;
-import com.afminguela.CAP.enums.Status;
-import com.afminguela.CAP.models.Patient;
+import com.afminguela.CAP.model.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
