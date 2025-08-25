@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,6 +22,8 @@ import java.util.Optional;
 public class PatientController {
     @Autowired
     private PatientService patientService;
+    @Autowired
+    private ResponseEntityExceptionHandler responseEntityExceptionHandler;
 
     @PostMapping
     public Patient save(@RequestBody Patient patient) {
@@ -55,7 +58,19 @@ public class PatientController {
         return patientService.findPatientByStatusOFF();
     }
 
+    @PatchMapping("/{id}/name")
+    public ResponseEntity <Patient> updateName(@PathVariable Long id, @RequestParam String name){
+        Optional<Patient> patientOpt = patientService.findPatientById(id);
+        if(patientOpt.isPresent()){
+            Patient patient = patientOpt.get();
+            patient.setName(name);
+           Patient updated = patientService.savePatient(patient);
+            return ResponseEntity.ok(updated);
 
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 
 }
