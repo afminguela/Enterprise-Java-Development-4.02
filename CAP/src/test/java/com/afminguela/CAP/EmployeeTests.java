@@ -21,8 +21,7 @@ import java.util.List;
 import static com.afminguela.CAP.enums.Department.*;
 import static com.afminguela.CAP.enums.Status.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -86,6 +85,64 @@ class EmployeeTests {
 
     }
 
+    @Test
+    void getEmployeesByStatus() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/Employees/search/status/{status}", ON_CALL.name()))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(String.valueOf(MediaType.APPLICATION_JSON)))
+                .andReturn();
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("JL"));
+    }
+
+    @Test
+    void getEmployeeByDepartment() throws Exception {
+    MvcResult mvcResult = mockMvc.perform(get("/Employees/search/department/{department}",cardiology.name()))
+           .andExpect(status().isOk())
+           .andExpect(MockMvcResultMatchers.content().contentType(String.valueOf(MediaType.APPLICATION_JSON)))
+            .andReturn();
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("JL"));
+    }
+    @Test
+    void UpdateEmployeeByname() throws Exception {
+        String newName = "\"carlos\"";
+        MvcResult mvcResult = mockMvc.perform(
+                        patch("/Employees/{id}/name",1L)
+                                .content(newName)
+                                .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(org.springframework.http.MediaType.APPLICATION_JSON))
+                .andReturn();
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("carlos"));
+    }
+
+    @Test
+    void UpdateEmployeeBystatus() throws Exception {
+        String newStatus = "\"OFF\"";
+        MvcResult mvcResult = mockMvc.perform(
+                        patch("/Employees/{id}/status",1L)
+                                .content(newStatus)
+                                .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(org.springframework.http.MediaType.APPLICATION_JSON))
+                .andReturn();
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("OFF"));
+    }
+
+    @Test
+    void UpdateEmployeeByDepartment() throws Exception {
+        String newDepartment = "\"immunology\"";
+        MvcResult mvcResult = mockMvc.perform(
+                patch("/Employees/{id}/department",1L)
+                        .content(newDepartment)
+                        .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(org.springframework.http.MediaType.APPLICATION_JSON))
+                .andReturn();
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("immunology"));
+    }
 
 }
 
