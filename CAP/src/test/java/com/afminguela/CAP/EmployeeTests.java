@@ -35,14 +35,19 @@ class EmployeeTests {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-@BeforeEach
+    private Long employeeId;
 
-	public void contextLoads() {
+
+    @BeforeEach
+    public void contextLoads() {
     mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     Employee employee = new Employee(null,"JL",cardiology,ON_CALL);
-    Employee employee2 = new Employee(null,"Laura",orthopaedic,ON);
+    employee = employeeRepository.save(employee);
+    employeeId = employee.getId();
 
-    employeeRepository.saveAll(List.of(employee,employee2));
+    Employee employee2 = new Employee(null,"Laura",orthopaedic,ON);
+    employeeRepository.save(employee2);
+
 	}
 
     @AfterEach
@@ -76,7 +81,7 @@ class EmployeeTests {
 
     @Test
     void getEmployeeById() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/Employees/{id}", 1L))
+        MvcResult mvcResult = mockMvc.perform(get("/Employees/{id}", employeeId))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(String.valueOf(MediaType.APPLICATION_JSON)))
                 .andReturn();
@@ -106,7 +111,7 @@ class EmployeeTests {
     void UpdateEmployeeByname() throws Exception {
         String newName = "\"carlos\"";
         MvcResult mvcResult = mockMvc.perform(
-                        patch("/Employees/{id}/name",1L)
+                        patch("/Employees/{id}/name",employeeId)
                                 .content(newName)
                                 .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
                 )
@@ -120,7 +125,7 @@ class EmployeeTests {
     void UpdateEmployeeBystatus() throws Exception {
         String newStatus = "\"OFF\"";
         MvcResult mvcResult = mockMvc.perform(
-                        patch("/Employees/{id}/status",1L)
+                        patch("/Employees/{id}/status",employeeId)
                                 .content(newStatus)
                                 .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
                 )
@@ -134,7 +139,7 @@ class EmployeeTests {
     void UpdateEmployeeByDepartment() throws Exception {
         String newDepartment = "\"immunology\"";
         MvcResult mvcResult = mockMvc.perform(
-                patch("/Employees/{id}/department",1L)
+                patch("/Employees/{id}/department",employeeId)
                         .content(newDepartment)
                         .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
                 )

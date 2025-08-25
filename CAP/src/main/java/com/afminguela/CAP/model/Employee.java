@@ -24,4 +24,7 @@ public class Employee {
     private Status status;
 
 
+    public Long getId() {
+        return employee_id;
+    }
 }
