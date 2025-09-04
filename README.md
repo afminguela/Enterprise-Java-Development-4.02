@@ -110,4 +110,4 @@ Los endpoints específicos y su documentación detallada están disponibles una 
 
 ---
 
-*Este proyecto es parte del curso Enterprise Java Development 4.02 y tiene fines educativos.*
+*Este proyecto es parte del curso  Web Development de Ironhack spain y tiene fines educativos.*
